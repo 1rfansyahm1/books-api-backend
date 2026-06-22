@@ -30,6 +30,11 @@ return function (App $app): void {
     
     $app->get('/api/books', [$bookCtrl, 'index']);
     $app->get('/api/books/{id}', [$bookCtrl, 'show']);
+    $app->get('/', function ($request, $response, $args) {
+        $payload = json_encode(['status' => 'Books API is awake and running!']);
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    });
     
     // Protected
     $app->get('/auth/me', [$authCtrl, 'me'])->add($auth);
